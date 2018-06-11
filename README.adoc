@@ -22,6 +22,12 @@ Let's run gotty docker
 docker run -p 8989:8080 -d --name gotty -it  modenaf360/gotty:latest
 ----
 
+You can use docker-compose templete
+----
+docker-compose up
+----
+
+
 Check rest index call :
 [source,shell]
 ----

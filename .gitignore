@@ -1,7 +1,7 @@
 
 # Created by https://www.gitignore.io/api/osx,eclipse,java-web
 
-### Eclipse ###
+### IntelliJ ###
 
 .metadata
 bin/
@@ -24,7 +24,7 @@ private/
 .project
 .classpath
 .idea
-.iml
+*.iml
 
 
 # External tool builders
