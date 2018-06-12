@@ -14,7 +14,6 @@ To try the example, you need to have a docker installed on your OS. And needed s
 
 
 After docker installation, execute this command to bake a docker image in a terminal:
-
 ```console
 docker build -t modenaf360/gotty:latest .
 ```
@@ -29,13 +28,12 @@ You can use docker-compose templete
 docker-compose up
 ```
 
-or
+or,
 ```console
 docker-compose -f ./docker-compose.yml
 ```
 
 Check rest index call :
-
 ```console
 http://localhost:8989
 ```
