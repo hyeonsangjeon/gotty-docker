@@ -32,7 +32,7 @@ docker-compose up
 or
 ```console
 docker-compose -f ./docker-compose.yml
-``
+```
 
 Check rest index call :
 
