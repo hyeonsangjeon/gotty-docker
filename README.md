@@ -52,7 +52,6 @@ http://localhost:8989
 
 
 # Reference
-
-[1]. https://github.com/yudai/gotty
-[2]. https://docs.docker.com/engine/installation/
+[1].https://github.com/yudai/gotty  
+[2].https://docs.docker.com/engine/installation
 
