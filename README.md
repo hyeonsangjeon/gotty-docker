@@ -50,6 +50,9 @@ http://localhost:8989
 |'-t'           |using bash TTY mode (pseudo-TTY)                              |
 
 
+###docker-hub
+https://hub.docker.com/r/modenaf360/gotty-docker/ 
+
 ## Reference
 [1].https://github.com/yudai/gotty  
 [2].https://docs.docker.com/engine/installation
