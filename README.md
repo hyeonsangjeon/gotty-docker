@@ -39,7 +39,7 @@ http://localhost:8989
 
 
 ## docker options are as follows,
-
+ 
 |Variables      |Description                                                   |
 |---------------|--------------------------------------------------------------|
 |'run'          |run                                                           |  
