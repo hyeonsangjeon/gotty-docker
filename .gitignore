@@ -104,3 +104,9 @@ Temporary Items
 .apdisk
 
 # End of https://www.gitignore.io/api/osx,eclipse,java-web
+
+.env
+.env.*
+!.env.example
+examples/certs/
+__pycache__/

@@ -1,8 +1,20 @@
-my-gotty:
-  hostname: mygotty
-  ports:
-  - 8989:8080
-  tty: true
-  image: modenaf360/gotty:latest
-  stdin_open: true
-  tty: true                     #using bash TTY mode (pseudo-TTY)
+services:
+  gotty:
+    build:
+      context: .
+      args:
+        GOTTY_VERSION: v1.8.0
+    image: ${IMAGE:-modenaf360/gotty-docker:latest}
+    container_name: gotty
+    ports:
+      - "${GOTTY_HOST_PORT:-8989}:8080"
+    environment:
+      GOTTY_USER: ${GOTTY_USER:-gotty}
+      GOTTY_PASSWORD: ${GOTTY_PASSWORD:?Set GOTTY_PASSWORD in .env or your shell before running docker compose up}
+      GOTTY_COMMAND: ${GOTTY_COMMAND:-/bin/bash -l}
+      GOTTY_PERMIT_WRITE: ${GOTTY_PERMIT_WRITE:-true}
+      GOTTY_RECONNECT: ${GOTTY_RECONNECT:-true}
+      GOTTY_TITLE_FORMAT: ${GOTTY_TITLE_FORMAT:-GoTTY Docker}
+    stdin_open: true
+    tty: true
+    restart: unless-stopped

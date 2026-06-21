@@ -1,0 +1,16 @@
+services:
+  gotty:
+    build:
+      context: ..
+    image: modenaf360/gotty-docker:latest
+    ports:
+      - "8989:8080"
+    environment:
+      GOTTY_USER: gotty
+      GOTTY_PASSWORD: ${GOTTY_PASSWORD:?Set GOTTY_PASSWORD before starting this sample}
+      GOTTY_COMMAND: /bin/bash -l
+      GOTTY_PERMIT_WRITE: "true"
+      GOTTY_RECONNECT: "true"
+      GOTTY_TITLE_FORMAT: "GoTTY Docker - Auth Shell"
+    stdin_open: true
+    tty: true

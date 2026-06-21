@@ -1,0 +1,14 @@
+services:
+  gotty:
+    build:
+      context: ..
+    image: modenaf360/gotty-docker:latest
+    ports:
+      - "8990:8080"
+    environment:
+      GOTTY_COMMAND: top
+      GOTTY_PERMIT_WRITE: "false"
+      GOTTY_RECONNECT: "true"
+      GOTTY_TITLE_FORMAT: "GoTTY Docker - Read-only Monitor"
+    stdin_open: true
+    tty: true

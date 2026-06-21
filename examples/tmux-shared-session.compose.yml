@@ -1,0 +1,17 @@
+services:
+  gotty:
+    build:
+      context: ..
+    image: modenaf360/gotty-docker:latest
+    ports:
+      - "8991:8080"
+    environment:
+      GOTTY_USER: gotty
+      GOTTY_PASSWORD: ${GOTTY_PASSWORD:?Set GOTTY_PASSWORD before starting this sample}
+      GOTTY_COMMAND: tmux new-session -A -s gotty
+      GOTTY_PERMIT_WRITE: "true"
+      GOTTY_RECONNECT: "true"
+      GOTTY_MAX_CONNECTION: "8"
+      GOTTY_TITLE_FORMAT: "GoTTY Docker - Shared tmux"
+    stdin_open: true
+    tty: true
