@@ -164,9 +164,13 @@ labels:
 | `GOTTY_PERMIT_WRITE` | `true` | Allows browser clients to type into the terminal. Set to `false` for dashboards. |
 | `GOTTY_RECONNECT` | `true` | Enables browser reconnect behavior. |
 | `GOTTY_RANDOM_URL` | unset | Set to `true` to generate a non-root URL path. |
+| `GOTTY_RANDOM_URL_LENGTH` | `8` | Length of the random URL path segment when `GOTTY_RANDOM_URL=true`. |
 | `GOTTY_TLS` | unset | Set to `true` to enable GoTTY TLS directly. |
+| `GOTTY_TITLE_FORMAT` | `GoTTY Docker` | Browser tab/title text for the terminal. |
+| `GOTTY_ADDRESS` | `0.0.0.0` | Interface GoTTY binds to inside the container. |
+| `GOTTY_PORT` | `8080` | Port GoTTY listens on inside the container. |
 
-GoTTY also reads its own `GOTTY_*` environment variables, including `GOTTY_MAX_CONNECTION`, `GOTTY_ONCE`, `GOTTY_TIMEOUT`, `GOTTY_TITLE_FORMAT`, `GOTTY_TLS_CRT`, and `GOTTY_TLS_KEY`.
+GoTTY also reads its own `GOTTY_*` environment variables, including `GOTTY_MAX_CONNECTION`, `GOTTY_ONCE`, `GOTTY_TIMEOUT`, `GOTTY_TLS_CRT`, and `GOTTY_TLS_KEY`.
 
 ## Image Tags
 
