@@ -108,6 +108,8 @@ GitHub Actions can publish the same image on `master`, tags, or manual dispatch.
 - `DOCKERHUB_USERNAME`
 - `DOCKERHUB_TOKEN`
 
+If those secrets are not configured, the workflow skips publishing instead of failing the build.
+
 ## Assets
 
 The README GIF and social preview are generated, not hand-edited:
