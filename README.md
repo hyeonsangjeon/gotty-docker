@@ -1,6 +1,7 @@
 # GoTTY Docker
 
 [![Docker image](https://img.shields.io/badge/docker-modenaf360%2Fgotty--docker-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/r/modenaf360/gotty-docker)
+[![Docker Pulls](https://img.shields.io/docker/pulls/modenaf360/gotty-docker?logo=docker&label=pulls)](https://hub.docker.com/r/modenaf360/gotty-docker)
 [![GoTTY](https://img.shields.io/badge/GoTTY-v1.8.0-55cdfc)](https://github.com/sorenisanerd/gotty/releases/tag/v1.8.0)
 [![Ubuntu](https://img.shields.io/badge/Ubuntu-26.04-E95420?logo=ubuntu&logoColor=white)](https://hub.docker.com/_/ubuntu)
 [![License](https://img.shields.io/github/license/hyeonsangjeon/gotty-docker)](LICENSE)
