@@ -8,6 +8,10 @@ on:
       - "v*"
   workflow_dispatch:
 
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
 env:
   IMAGE_NAME: modenaf360/gotty-docker
   LEGACY_IMAGE_NAME: modenaf360/gotty
@@ -26,13 +30,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
       - name: Skip publish when Docker Hub secrets are missing
         if: ${{ env.DOCKERHUB_USERNAME == '' || env.DOCKERHUB_TOKEN == '' }}
         run: |
           echo "::notice::Skipping Docker Hub publish. Set DOCKERHUB_USERNAME and DOCKERHUB_TOKEN repository secrets to enable automatic publishing."
+
+      - name: Set up QEMU
+        if: ${{ env.DOCKERHUB_USERNAME != '' && env.DOCKERHUB_TOKEN != '' }}
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        if: ${{ env.DOCKERHUB_USERNAME != '' && env.DOCKERHUB_TOKEN != '' }}
+        uses: docker/setup-buildx-action@v3
 
       - name: Log in to Docker Hub
         if: ${{ env.DOCKERHUB_USERNAME != '' && env.DOCKERHUB_TOKEN != '' }}
@@ -48,6 +57,8 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
+          provenance: true
+          sbom: true
           build-args: |
             GOTTY_VERSION=${{ env.GOTTY_VERSION }}
           tags: |
@@ -56,5 +67,10 @@ jobs:
             ${{ env.LEGACY_IMAGE_NAME }}:latest
             ${{ env.LEGACY_IMAGE_NAME }}:${{ env.GOTTY_VERSION }}-${{ env.UBUNTU_VERSION }}
           labels: |
+            org.opencontainers.image.title=gotty-docker
+            org.opencontainers.image.description=A modern GoTTY web terminal container with optional Basic Auth.
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.url=https://github.com/${{ github.repository }}
             org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.licenses=MIT
+            org.opencontainers.image.version=${{ env.GOTTY_VERSION }}-${{ env.UBUNTU_VERSION }}

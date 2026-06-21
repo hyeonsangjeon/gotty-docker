@@ -1,0 +1,4 @@
+ignored:
+  # Ubuntu rolling base image: pinning apt package versions breaks rebuilds as the
+  # archive moves, so we intentionally install unpinned, security-patched packages.
+  - DL3008

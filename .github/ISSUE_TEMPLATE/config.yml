@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security report
+    url: https://github.com/hyeonsangjeon/gotty-docker/security/advisories/new
+    about: Please report security vulnerabilities privately, not as public issues.
+  - name: GoTTY upstream project
+    url: https://github.com/sorenisanerd/gotty
+    about: Bugs in GoTTY itself (not the container) should be reported upstream.
