@@ -28,7 +28,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Skip publish when Docker Hub secrets are missing
         if: ${{ env.DOCKERHUB_USERNAME == '' || env.DOCKERHUB_TOKEN == '' }}
