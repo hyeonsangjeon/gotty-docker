@@ -1,0 +1,96 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Lint Dockerfile (hadolint)
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+
+      - name: Lint shell scripts (shellcheck)
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: .
+          additional_files: run_gotty.sh
+
+  compose:
+    name: Validate Compose files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate every Compose file
+        env:
+          GOTTY_PASSWORD: dummy
+        run: |
+          status=0
+          for f in docker-compose.yml examples/*.compose.yml; do
+            if docker compose -f "$f" config -q; then
+              echo "OK: $f"
+            else
+              echo "FAIL: $f"
+              status=1
+            fi
+          done
+          exit "$status"
+
+  build:
+    name: Build & smoke test
+    runs-on: ubuntu-latest
+    needs: [lint, compose]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image (amd64)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          tags: gotty-docker:ci
+          build-args: |
+            GOTTY_VERSION=v1.8.0
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Smoke test the running container
+        run: |
+          docker run -d --name gotty-ci -p 18989:8080 \
+            -e GOTTY_USER=gotty -e GOTTY_PASSWORD=ci-secret gotty-docker:ci
+          for i in $(seq 1 15); do
+            status="$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18989/ || true)"
+            [ "$status" = "401" ] && break
+            sleep 1
+          done
+          echo "Unauthenticated status: ${status}"
+          [ "$status" = "401" ] || { docker logs gotty-ci; exit 1; }
+
+          auth="$(curl -s -o /dev/null -w '%{http_code}' -u gotty:ci-secret http://127.0.0.1:18989/ || true)"
+          echo "Authenticated status: ${auth}"
+          [ "$auth" = "200" ] || { docker logs gotty-ci; exit 1; }
+
+          echo "Smoke test passed."
+
+      - name: Tear down
+        if: always()
+        run: docker rm -f gotty-ci || true

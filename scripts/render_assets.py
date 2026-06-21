@@ -95,7 +95,7 @@ def render_social() -> None:
     draw.rectangle((56, 56, 1224, 114), fill=(18, 26, 43))
 
     text(draw, (88, 88), "modenaf360/gotty-docker", CYAN, 28, bold=True)
-    text(draw, (88, 164), "GoTTY Docker", INK, 86, bold=True)
+    text(draw, (88, 164), "GoTTY Docker", INK, 80, bold=True)
     text(draw, (92, 270), "Share a real terminal in the browser.", MUTED, 34)
     text(draw, (92, 318), "Ubuntu 26.04 + GoTTY v1.8.0", GREEN, 30, bold=True)
     text(draw, (92, 356), "Basic Auth out of the box", CYAN, 27, bold=True)
@@ -122,7 +122,7 @@ def render_social() -> None:
         ("  modenaf360/gotty-docker", INK),
         ("GoTTY is serving a protected shell", GREEN),
     ]
-    terminal_window(draw, (690, 158, 1168, 476), terminal_lines)
+    terminal_window(draw, (700, 158, 1168, 476), terminal_lines)
 
     text(draw, (92, 530), "github.com/hyeonsangjeon/gotty-docker", MUTED, 24, mono=True)
     img.save(SOCIAL)

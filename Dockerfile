@@ -19,6 +19,8 @@ ENV LANG=C.UTF-8 \
     GOTTY_COMMAND="/bin/bash -l" \
     SHELL=/bin/bash
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 RUN set -eux; \
     export DEBIAN_FRONTEND=noninteractive; \
     apt-get update; \

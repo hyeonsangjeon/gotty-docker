@@ -1,0 +1,64 @@
+name: Bug report
+description: Report a problem with the GoTTY Docker image
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug. Please fill in as much as you can.
+        For security issues, **do not** open an issue — see [SECURITY.md](../blob/master/SECURITY.md).
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear and concise description of the bug.
+      placeholder: GoTTY returns 500 when I set GOTTY_COMMAND to ...
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: The exact `docker run` / `docker compose` command and any env vars (redact secrets).
+      placeholder: |
+        docker run -p 8989:8080 -e GOTTY_USER=gotty -e GOTTY_PASSWORD=*** modenaf360/gotty-docker:latest
+      render: console
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: input
+    id: image-tag
+    attributes:
+      label: Image tag
+      placeholder: "modenaf360/gotty-docker:latest or v1.8.0-ubuntu26.04"
+    validations:
+      required: true
+  - type: dropdown
+    id: arch
+    attributes:
+      label: Host architecture
+      options:
+        - linux/amd64
+        - linux/arm64
+        - other (note in description)
+    validations:
+      required: true
+  - type: input
+    id: docker-version
+    attributes:
+      label: Docker version
+      placeholder: "output of: docker --version"
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: Output of `docker logs <container>` (redact secrets).
+      render: shell
