@@ -29,7 +29,15 @@ Open <http://localhost:8989> and sign in as `gotty`.
 
 ## Before you open a pull request
 
-Please run the same checks CI runs:
+Please run the same checks CI runs. The quickest way is the Makefile helpers:
+
+```console
+make lint      # hadolint + shellcheck
+make validate  # validate every Compose file
+make smoke     # build the image and verify Basic Auth is enforced
+```
+
+Or run them individually:
 
 ```console
 # Lint the Dockerfile

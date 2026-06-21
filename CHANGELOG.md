@@ -15,6 +15,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `.editorconfig` and `.hadolint.yaml` for consistent contributions.
 - Expanded README: badges, table of contents, features, reverse-proxy guidance,
   image tags, and a troubleshooting section.
+- Makefile convenience targets (`make help`, `lint`, `validate`, `smoke`) that
+  mirror the CI checks for a faster local workflow.
+
+### Changed
+- Documented the remaining `GOTTY_*` configuration variables in the README,
+  including `GOTTY_RANDOM_URL_LENGTH`, `GOTTY_TITLE_FORMAT`, `GOTTY_ADDRESS`, and
+  `GOTTY_PORT`.
+- Replaced the leftover Java/Eclipse `.gitignore` with one scoped to this
+  Docker/shell/Python project.
 
 ## [1.8.0] - 2026-06-21
 
