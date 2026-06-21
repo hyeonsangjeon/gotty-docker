@@ -209,7 +209,8 @@ def render_social() -> None:
         render_terminal_line(draw, (ix1 + 26, ty), line, 19)
         ty += 30
     # blinking cursor block on last line
-    draw.rectangle((ix1 + 26 + int(draw.textlength("$ tmux new -A -s gotty ", font=font(19, mono=True))), ty - 30, ix1 + 38 + int(draw.textlength("$ tmux new -A -s gotty ", font=font(19, mono=True))), ty - 8), fill=GREEN)
+    cursor_x = ix1 + 26 + int(draw.textlength("$ tmux new -A -s gotty ", font=font(19, mono=True)))
+    draw.rectangle((cursor_x, ty - 30, cursor_x + 12, ty - 8), fill=GREEN)
 
     img.save(SOCIAL)
 
@@ -219,6 +220,12 @@ def render_social() -> None:
 # ---------------------------------------------------------------------------
 DEMO_SIZE = (1000, 600)
 BADGES = [("Basic Auth", GREEN), ("tmux sharing", PURPLE), ("TLS samples", YELLOW)]
+
+# GIF palette tuning. Seeding the adaptive palette with full brand swatches
+# guarantees small accents (e.g. the red/yellow traffic lights) are preserved.
+GIF_COLORS = 128
+SWATCH_W, SWATCH_H = 70, 60
+PALETTE_SWATCHES = [RED, YELLOW, GREEN, CYAN, BLUE, PURPLE, INK, MUTED, FAINT, BG_TOP, BG_BOTTOM, PANEL, CHROME, BORDER]
 
 
 def demo_base() -> tuple[Image.Image, tuple[int, int, int, int]]:
@@ -312,15 +319,14 @@ def render_demo() -> None:
         push(demo_frame(visible.copy(), i % 2 == 0, browser_ready=True), 360)
 
     # Quantize every frame against one shared palette so the GIF stays small
-    # and free of per-frame palette flicker.
-    # Seed the shared palette with the brand swatches so small but important
-    # accents (red/yellow traffic lights, cursor) survive quantization.
+    # and free of per-frame palette flicker. Seed the palette with the brand
+    # swatches so small but important accents (red/yellow traffic lights,
+    # cursor) survive quantization.
     seed = frames[-1].copy()
     sdraw = ImageDraw.Draw(seed)
-    swatches = [RED, YELLOW, GREEN, CYAN, BLUE, PURPLE, INK, MUTED, FAINT, BG_TOP, BG_BOTTOM, PANEL, CHROME, BORDER]
-    for i, color in enumerate(swatches):
-        sdraw.rectangle((i * 70, 0, i * 70 + 69, 59), fill=color)
-    palette_src = seed.convert("P", palette=Image.Palette.ADAPTIVE, colors=128)
+    for i, color in enumerate(PALETTE_SWATCHES):
+        sdraw.rectangle((i * SWATCH_W, 0, i * SWATCH_W + SWATCH_W - 1, SWATCH_H - 1), fill=color)
+    palette_src = seed.convert("P", palette=Image.Palette.ADAPTIVE, colors=GIF_COLORS)
     quantized = [f.quantize(palette=palette_src, dither=Image.Dither.NONE) for f in frames]
 
     quantized[0].save(
